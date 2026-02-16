@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import postRouter from "./routes/postRouter.mjs";
+import authRouter from "./routes/auth.mjs";
 
 const app = express();
 const port = process.env.PORT || 4001;
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(express.json());
 app.use("/posts", postRouter)
+app.use("/auth", authRouter)
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
