@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectionPool from "./utils/db.mjs";
+import { validatePostData } from "./middlewares/postValidation.mjs";
 
 const app = express();
 const port = process.env.PORT || 4001;
@@ -18,7 +19,7 @@ app.use(
 );
 app.use(express.json());
 
-app.post("/posts", async (req, res) => {
+app.post("/posts", validatePostData, async (req, res) => {
   const newPost = {
     ...req.body
   }
@@ -116,7 +117,7 @@ app.get("/posts/:postId", async (req, res) => {
   }
 })
 
-app.put("/posts/:postId", async (req, res) => {
+app.put("/posts/:postId", validatePostData, async (req, res) => {
   try {
     const postIdFromClient = req.params.postId
     const updatePost = { ...req.body }
